@@ -1,0 +1,52 @@
+# File for configuring project / deployment build, push and pull steps
+
+# Generic metadata about this project
+name: prefect-pipelines-pilot
+prefect-version: 2.10.14
+
+# build section allows you to manage and build docker images
+build:
+  - prefect.deployments.steps.run_shell_script:
+      id: get-commit-hash
+      script: git rev-parse --short HEAD
+      stream_output: false
+  - prefect_docker.deployments.steps.build_docker_image:
+      id: build_image
+      requires: prefect-docker>=0.3.0
+      image_name: saifulelucidata/prefect-pipelines-pilot
+      tag: "{{ get-commit-hash.stdout }}"
+      dockerfile: auto
+      push: true
+
+# push section allows you to manage if and how this project is uploaded to remote locations
+push: null
+
+# pull section allows you to provide instructions for cloning this project in remote locations
+pull:
+  - prefect.deployments.steps.git_clone:
+      id: clone-step
+      repository: git@github.com:saif-el/prefect-pipelines-pilot.git
+      branch: main
+      access_token: null
+  - prefect.deployments.steps.pip_install_requirements:
+      directory: "{{ clone-step.directory }}"
+      requirements_file: requirements.txt
+      stream_output: False
+
+# the deployments section allows you to provide configuration for deploying flows
+deployments:
+  - name: play
+    version: 0
+    entrypoint: workflow/main.py:play
+    tags:
+      - 'playground'
+      - 'saif-el'
+    parameters:
+      subject: 'meaning'
+      object: 'life'
+      magic_number_one: 5,
+      magic_number_two: 11,
+    work_pool:
+      name: "play-pool"
+      job_variables:
+        image: "{{ build_image.image }}"

@@ -1,0 +1,105 @@
+###
+### A complete description of a Prefect Deployment for flow 'play'
+###
+name: play
+description: null
+version: d1b9e7ddd611c77b4ca57fd7a6be4354
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: play-pool
+tags: []
+parameters:
+  object: life
+  subject: meaning
+  magic_number_one: 5
+  magic_number_two: 11
+schedule: null
+is_schedule_active: true
+infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: play
+manifest_path: null
+infrastructure:
+  type: ecs-task
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  aws_credentials:
+    aws_access_key_id: null
+    aws_secret_access_key: null
+    aws_session_token: null
+    profile_name: null
+    region_name: null
+    aws_client_parameters:
+      api_version: null
+      use_ssl: true
+      verify: true
+      verify_cert_path: null
+      endpoint_url: null
+      config: null
+    block_type_slug: aws-credentials
+  task_definition_arn: null
+  task_definition: null
+  family: prefect-play-flow
+  image: prefecthq/prefect:2-python3.9
+  auto_deregister_task_definition: true
+  cpu: 256
+  memory: 512
+  execution_role_arn: arn:aws:iam::518075716045:role/prefect-play-ecs-task-execution-role
+  configure_cloudwatch_logs: true
+  cloudwatch_logs_options:
+    awslogs-group: prefect-play-flow-log-group
+    awslogs-region: us-west-2
+    awslogs-stream-prefix: flow
+  stream_output: true
+  launch_type: FARGATE
+  vpc_id: vpc-007cfb03d214ca2ca
+  cluster: prefect-play-cluster
+  task_role_arn: arn:aws:iam::518075716045:role/prefect-play-ecs-task-role
+  task_customizations: []
+  task_start_timeout_seconds: 120
+  task_watch_poll_interval: 5.0
+  _block_document_id: 0b1cdfe7-4ddb-4a11-b5a6-32a6819f7be2
+  _block_document_name: play
+  _is_anonymous: false
+  block_type_slug: ecs-task
+  _block_type_slug: ecs-task
+storage:
+  bucket_path: prefect-play-data
+  aws_access_key_id: null
+  aws_secret_access_key: null
+  _block_document_id: 5ed05ea1-a0b7-4de2-8af2-ed2d13588753
+  _block_document_name: play
+  _is_anonymous: false
+  block_type_slug: s3
+  _block_type_slug: s3
+path: ''
+entrypoint: workflow/main.py:play
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    subject:
+      title: subject
+      position: 0
+    object:
+      title: object
+      position: 1
+    magic_number_one:
+      title: magic_number_one
+      position: 2
+    magic_number_two:
+      title: magic_number_two
+      position: 3
+  required:
+  - subject
+  - object
+  - magic_number_one
+  - magic_number_two
+  definitions: null
+timestamp: '2023-06-19T03:29:03.006508+00:00'
+triggers: []

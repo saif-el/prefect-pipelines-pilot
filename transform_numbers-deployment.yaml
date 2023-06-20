@@ -1,18 +1,14 @@
 ###
-### A complete description of a Prefect Deployment for flow 'play'
+### A complete description of a Prefect Deployment for flow 'transform-numbers'
 ###
-name: play
+name: transform_numbers
 description: null
 version: 24013187f50a1f7a08264318048f5c5a
 # The work queue that will handle this deployment's runs
 work_queue_name: default
 work_pool_name: play-pool
 tags: []
-parameters:
-  object: life
-  subject: meaning
-  magic_number_one: 5
-  magic_number_two: 11
+parameters: {}
 schedule: null
 is_schedule_active: true
 infra_overrides: {}
@@ -20,7 +16,7 @@ infra_overrides: {}
 ###
 ### DO NOT EDIT BELOW THIS LINE
 ###
-flow_name: play
+flow_name: transform-numbers
 manifest_path: null
 infrastructure:
   type: ecs-task
@@ -79,28 +75,20 @@ storage:
   block_type_slug: s3
   _block_type_slug: s3
 path: ''
-entrypoint: workflow/main.py:play
+entrypoint: workflow/main.py:transform_numbers
 parameter_openapi_schema:
   title: Parameters
   type: object
   properties:
-    subject:
-      title: subject
-      position: 0
-    object:
-      title: object
-      position: 1
     magic_number_one:
       title: magic_number_one
-      position: 2
+      position: 0
     magic_number_two:
       title: magic_number_two
-      position: 3
+      position: 1
   required:
-  - subject
-  - object
   - magic_number_one
   - magic_number_two
   definitions: null
-timestamp: '2023-06-20T10:48:09.484536+00:00'
+timestamp: '2023-06-20T10:47:32.656155+00:00'
 triggers: []
